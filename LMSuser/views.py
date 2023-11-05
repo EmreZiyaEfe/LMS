@@ -60,7 +60,7 @@ def register_view(request):
 
                 # Kayıt işlemi başarılı oldu.
                 messages.success(request, 'Kayıt işlemi başarıyla tamamlandı.')
-                return redirect('indexPage')  # Başarılı kayıttan sonra yönlendirilecek URL
+                return redirect('login')  # Başarılı kayıttan sonra yönlendirilecek URL
             else:
                 messages.error(request, 'Bu e-posta zaten kullanılıyor.')
     else:

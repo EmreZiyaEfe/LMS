@@ -6,18 +6,19 @@
 
 
 {% block content %}
-<h3 class="heading text-white">{{videolar.first.video_player_title}}</h3>
+<h3 class="heading text-white"></h3>
 <div class="container">
     <div class="main-video">
         <div class="video">
-            <iframe id="videoPlayer" class="w-[900px] h-[400px] rounded-lg" src="{{videolar.first.media.url}}" allowfullscreen style="border: 1px solid #000;"></iframe>
-            <h3 class="title text-center ">1.DERS VİDEOSU</h3>
+            <iframe id="videoPlayer" class="w-[900px] h-[400px] rounded-lg" src="https:www.youtube.com/embed/{{ videolar.video_id }}" allowfullscreen style="border: 1px solid #000;"></iframe>
+            <h3 class="title text-center ">{{videolar.video_player_title}}</h3>
         </div>
     </div>
 
     <div class="video-list">
         {% for video in videolar %}
-        <div class="vid active" onclick="{{video.media.url}}">{{video.video_player_title}}</div>
+        <div class="vid active" onclick="changeVideo('https:www.youtube.com/embed/{{ video.video_id }}', '{{video.video_player_title}}')">{{video.video_player_title}}</div>
+        {% comment %} <div class="vid active" onclick="changeVideo('{{video.media}}', '1.DERS VİDEOSU')">1.DERS VİDEOSU</div> {% endcomment %}
         {% endfor %}
     </div>
 </div>

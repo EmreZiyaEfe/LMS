@@ -4,6 +4,16 @@
 {% block content %}
 {% include "partials/_navbar1.html" %}
 
+{% if messages %}
+    <div class="w-4/6 mx-auto">
+      <ul class="messages bg-[#7277ab] text-2xl text-white border border-gray-300 p-4 my-4 rounded-md flex justify-center items-center">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
 <div class="mt-14 w-full h-screen">
 
 <h1 class="text-white text-xl font-bold mt-4 mb-4 text-center"> Yeni Kurs Oluştur </h1>

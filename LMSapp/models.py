@@ -5,6 +5,7 @@ from LMSuser.models import *
 
 class AnaCategory(models.Model):
     ana_category_name = models.CharField(max_length=100)
+    slug = models.SlugField(default="", null=False, unique=True, db_index=True, max_length=50)
     
 
     def __str__(self):
@@ -13,6 +14,8 @@ class AnaCategory(models.Model):
 class AltCategory(models.Model):
     alt_category_name = models.CharField(max_length=100)
     alt_category_image = models.ImageField(upload_to='category_pic')
+    slug = models.SlugField(default="", null=False, unique=True, db_index=True, max_length=50)
+
 
     def __str__(self):
         return self.alt_category_name
@@ -35,6 +38,7 @@ class Egitimler(models.Model):
     egitim_seviyesi = models.ForeignKey(CourseLevel,on_delete=models.SET_NULL, null=True)
     egitim_ucreti = models.IntegerField(null=True)
     egitmen = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    slug = models.SlugField(default="", blank=True, null=False, unique=True, db_index=True)
 
     def __str__(self):
         return self.egitimler_title
@@ -44,7 +48,7 @@ class Video_player(models.Model):
     video_player_title = models.CharField(max_length=50)
     video_aciklama = models.TextField(max_length=300)
     video_suresi = models.IntegerField()
-    media = models.URLField(max_length=800)
+    video_id = models.CharField(max_length=255, null=True)
     video_egitmen = models.ForeignKey(CustomUser,on_delete=models.CASCADE, null=True)
     video_egitim = models.ForeignKey(Egitimler, on_delete=models.CASCADE,null=True)
 

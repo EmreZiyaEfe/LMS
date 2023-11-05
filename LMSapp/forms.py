@@ -51,9 +51,9 @@ class CreateVideoForm(forms.Form):
         widget=forms.TextInput(attrs={'class':'course-input mt-4 p-2 w-4/5 m-2 border rounded text-sm sm:text-base max-[400px]:w-1/2',
                                       'placeholder':'Video süresini girin'})
     )
-    media = forms.CharField(
+    video_id = forms.CharField(
         widget=forms.TextInput(attrs={'class':'course-input mt-4 p-2 w-4/5 m-2 border rounded text-sm sm:text-base max-[400px]:w-1/2',
-                                      'placeholder':'Video URL girin'})
+                                      'placeholder':'Youtube video id girin'})
     )
     video_egitim = forms.ModelChoiceField(
         queryset=Egitimler.objects.all(),

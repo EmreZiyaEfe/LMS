@@ -71,27 +71,27 @@
             <div
                 class="max-w-sm bg-white px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-600">
                 <div class="mb-3 text-xl">
-                    <span class="p-1 text-sm bg-green-200 text-green-800 rounded">Temel Seviye</span>
+                    <span class="p-1 text-sm bg-green-200 text-green-800 rounded">{{ders.egitim_seviyesi}}</span>
                 </div>
                 <div class="relative">
                     <img class="w-full rounded-md" src="{{ders.egitim_image.url}}" alt="Renkler" />
                     <p
                         class="absolute top-0 bg-green-600 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
-                        5 000 TL</p>
+                        {{ders.egitim_ucreti}} TL</p>
                 </div>
                 <h1 class="mt-4 text-gray-800 text-2xl font-bold cursor-pointer">{{ders.egitimler_title}}</h1>
                 <div class="my-4">
                     <div class="flex space-x-1 items-center">
                         <i class="fa-regular fa-clock h-6 w-6 text-mavi"></i>
-                        <p class="mb-1.5">2saat 34dk</p>
+                        <p class="mb-1.5">{{ders.egitim_suresi}}</p>
                     </div>
                     <div class="flex space-x-1 items-center">
                         <i class="fa-regular fa-user h-6 w-6 text-mavi"></i>
-                        <p class="mb-1.5">Mehmet Çalışkan</p>
+                        <p class="mb-1.5">{{ders.egitmen.first_name}}</p>
                     </div>
                     <div class="flex space-x-1 items-center">
                         <i class="fa-solid fa-code h-6 w-6 text-mavi"></i>
-                        <p class="mb-1.5">HTML</p>
+                        <p class="mb-1.5">{{ders.egitim_alt_kategori}}</p>
                     </div>
                     <div>
                     <button onclick="window.location.href = 'sepet.html'"  class="mt-4 text-xl w-full text-white bg-mavi py-2 rounded-xl shadow-lg">Sepete Ekle</button>
