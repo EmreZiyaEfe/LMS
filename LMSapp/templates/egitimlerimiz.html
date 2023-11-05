@@ -1,0 +1,506 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+{% for anacategory in anacategory %}
+
+<div class="bg-gradient-to-r from-pembe to-lacivert carousel xl:w-[54rem] lg:w-[42rem] md:w-[30rem] sm:w-[18rem] px-16 py-8 bg-opacity-60 rounded-3xl mt-20 mx-auto">
+  <h1 class="text-2xl text-center mb-10 text-white">{{anacategory.ana_category_name}}</h1>
+  <div class="carousel__track" data-carousel-el="track">
+      <div class="carousel__slide">
+          
+          <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {% for altcategory in altcategory %}
+            <li>
+                <a href="{% url "dersler" %}" class="slide-item glide__slide ">
+                    <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                        <img src="{{altcategory.alt_category_image.url}}" class="w-24 h-24 object-cover rounded-full" alt="JavaScript">
+                        <span class="font-bold">
+                            {{altcategory.alt_category_name}}
+                        </span>
+                    </div>
+                </a>
+            </li>
+          {% endfor %}
+
+        </ul>
+      </div>
+  </div>
+  <div class="carousel__arrows flex justify-between mt-20">
+    <button class="carousel__arrow carousel__arrow--left left-4 duration-300 ease-in-out">
+      <i class="fas fa-angle-left text-2xl text-black"></i>
+  </button>
+  <button class="carousel__arrow carousel__arrow--right right-4 duration-300 ease-in-out">
+      <i class="fas fa-angle-right text-2xl text-black"></i>
+  </button>    
+  </div>
+</div>
+
+{% endfor %}
+
+  
+  {% comment %} <div class="bg-gradient-to-r from-lacivert to-pembe carousel xl:w-[54rem] lg:w-[42rem] md:w-[30rem] sm:w-[18rem] px-16 py-8 bg-opacity-60 rounded-3xl mt-20 mx-auto">
+    <h1 class="text-2xl text-center mb-10 text-white">Back-End</h1>
+    <div class="carousel__track" data-carousel-el="track">
+        <div class="carousel__slide">
+            <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <li class="slide-item glide__slide ">
+                    <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                      <a href="{% url "dersler" %}">
+                        <img src="{% static "img/c.png" %}" class="w-24 h-24 object-cover rounded-full" alt="C#">
+                        <span class="font-bold">
+                            C#
+                        </span>
+                      </a>
+                    </div>
+                </li>
+
+                <li class="slide-item glide__slide ">
+                    <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                        <a href="{% url "dersler" %}">
+                        <img src="{% static "img/java.png" %}" alt="Java" class="w-24 h-24 object-cover rounded-full">
+                        <span class="font-bold">
+                            Java
+                        </span>
+                         </a>
+                    </div>
+                </li>
+
+                <li class="slide-item glide__slide">
+                    <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                      <a href="{% url "dersler" %}">
+                      <img src="{% static "img/python.png" %}" class="w-24 h-24 object-cover rounded-full" alt="Python">
+                        <span class="font-bold">
+                            Python
+                        </span>
+                      </a>
+                    </div>
+                </li>
+
+                <li class="slide-item glide__slide ">
+                    <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                   <a href="{% url "dersler" %}">
+                      <img src="{% static "img/php.png" %}" class="w-24 h-24 object-cover rounded-full" alt="Php">
+                        <span class="font-bold">
+                            Php
+                        </span>
+                      </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="carousel__slide">
+            <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <li class="slide-item glide__slide ">
+                    <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                    <a href="{% url "dersler" %}">
+                      <img src="{% static "img/node.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="NodeJS">
+                        <span class="font-bold">
+                            NodeJS
+                        </span>
+                      </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="carousel__arrows flex justify-between mt-20" data-carousel-el="controls">
+      <button class="carousel__arrow carousel__arrow--left left-4 duration-300 ease-in-out">
+        <i class="fas fa-angle-left text-2xl text-black"></i>
+    </button>
+    <button class="carousel__arrow carousel__arrow--right right-4 duration-300 ease-in-out">
+        <i class="fas fa-angle-right text-2xl text-black"></i>
+    </button>      
+    </div>
+</div>
+
+    <div class="bg-gradient-to-r from-lacivert via-pembe to-lacivert carousel xl:w-[54rem] lg:w-[42rem] md:w-[30rem] sm:w-[18rem] px-16 py-8 bg-opacity-60 rounded-3xl mt-20 mx-auto">
+<h1 class="text-2xl text-center mb-10 text-white">Full-Stack</h1>
+<div class="carousel__track" data-carousel-el="track">
+  <div class="carousel__slide">
+    <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
+              <li class="slide-item glide__slide">
+                  <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                  <a href="{% url "dersler" %}">
+                    <img src="{% static "img/script.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="JavaScript">
+                    <span class= "font-bold">
+                      JavaScript
+                    </span>
+                  </a>
+                  </div>
+                </li>
+                
+                          
+                <li class="slide-item glide__slide">
+                  <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                  <a href="{% url "dersler" %}">
+                    <img src="{% static "img/html.jpg" %}" alt="HTML" class="w-24 h-24 object-cover rounded-full ">
+                    <span class= "font-bold">
+                      HTML
+                    </span>
+                  </a>
+                  </div>
+                </li>
+                
+                
+                <li class="slide-item glide__slide">
+                  <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                    <a href="{% url "dersler" %}">
+                    <img src="{% static "img/css.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="CSS">
+                    <span class= "font-bold">
+                      CSS
+                    </span>
+                  </a>
+                  </div>
+                </li>
+                
+                <li class="slide-item glide__slide">
+                  <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+                  <a href="{% url "dersler" %}">
+                    <img src="{% static "img/react.png" %}" class="w-24 h-24 object-cover rounded-full " alt="React">
+                    <span class= "font-bold">
+                      React
+                    </span>
+                  </a>
+                  </div>
+                </li>
+          </ul>
+  </div>
+  <div class="carousel__slide">
+    <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <li class="slide-item glide__slide ">
+        <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+        <a href="{% url "dersler" %}">
+          <img src="{% static "img/c.png" %}" class="w-24 h-24 object-cover rounded-full" alt="C#">
+          <span class= "font-bold">
+            C#
+          </span>
+        </a>
+        </div>
+      </li>
+
+      <li class="slide-item glide__slide">
+        <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+          <a href="{% url "dersler" %}">
+          <img src="{% static "img/java.png" %}" alt="Java" class="w-24 h-24 object-cover rounded-full">
+          <span class= "font-bold">
+            Java
+          </span>
+        </a>
+        </div>
+      </li>
+      
+        
+      <li class="slide-item glide__slide">
+        <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110 first-letter">
+        <a href="{% url "dersler" %}">
+          <img src="{% static "img/python.png" %}" class="w-24 h-24 object-cover rounded-full" alt="Python">
+          <span class= "font-bold">
+            Python
+          </span>
+        </a>
+        </div>
+      </li>
+      
+      <li class="slide-item glide__slide ">
+        <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+         <a href="{% url "dersler" %}">
+          <img src="{% static "img/php.png" %}" class="w-24 h-24 object-cover rounded-full" alt="Php">
+          <span class= "font-bold">
+            Php
+          </span>
+        </a>
+        </div>
+      </li>
+      
+      
+      
+    </ul>
+  </div>
+  <div class="carousel__slide">
+    <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <li class="slide-item glide__slide ">
+        <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+         <a href="{% url "dersler" %}">
+          <img src="{% static "img/node.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="NodeJS">
+          <span class= "font-bold">
+            NodeJS
+          </span>
+        </a>
+        </div>
+
+      </li>
+</ul>
+</div>
+</div>
+<div class="carousel__arrows flex justify-between mt-20" data-carousel-el="controls">
+  <button class="carousel__arrow carousel__arrow--left left-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-left text-2xl text-black"></i>
+</button>
+<button class="carousel__arrow carousel__arrow--right right-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-right text-2xl text-black"></i>
+</button>      
+</div>
+</div>
+
+<div class="bg-gradient-to-r from-lacivert to-pembe carousel xl:w-[54rem] lg:w-[42rem] md:w-[30rem] sm:w-[18rem] px-16 py-8 bg-opacity-60 rounded-3xl mt-20 mx-auto">
+<h1 class="text-2xl text-center mb-10 text-white">Siber Güvenlik</h1>
+<div class="carousel__track" data-carousel-el="track">
+  <div class="carousel__slide">
+    <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <li class="slide-item glide__slide ">  
+        <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+          <a href="{% url "dersler" %}">  
+          <img src="{% static "img/siber1.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Malwarebytes">
+            <span class= "font-bold">
+              Malwarebytes
+            </span>
+          </a>
+          </div>
+        </li>
+        
+                  
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+          <a href="{% url "dersler" %}">
+            <img src="{% static "img/siber2.jpg" %}" alt="Mimecast" class="w-24 h-24 object-cover rounded-full ">
+            <span class= "font-bold">
+              Mimecast
+            </span>
+          </a>
+          </div>
+        </li>
+        
+        
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+            <a href="{% url "dersler" %}">
+            <img src="{% static "img/siber3.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Netsparker">
+            <span class= "font-bold">
+              Netsparker
+            </span>
+          </a>
+          </div>
+        </li>
+        
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+           <a href="{% url "dersler" %}">
+            <img src="{% static "img/siber4.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Vipre">
+            <span class= "font-bold">
+            Vipre
+            </span>
+          </a>
+          </div>
+        </li>
+  </ul>
+</div>
+<div class="carousel__slide">
+<ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<li class="slide-item glide__slide ">
+<div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+ <a href="{% url "dersler" %}">
+  <img src="{% static "img/siber5.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="LifeLock">
+  <span class= "font-bold">
+    LifeLock
+  </span>
+</a>
+</div>
+</li> 
+
+</ul>
+  </div>
+</div>
+<div class="carousel__arrows flex justify-between mt-20" data-carousel-el="controls">
+  <button class="carousel__arrow carousel__arrow--left left-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-left text-2xl text-black"></i>
+</button>
+<button class="carousel__arrow carousel__arrow--right right-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-right text-2xl text-black"></i>
+</button>      
+</div>
+</div>
+
+<div class="bg-gradient-to-r from-pembe to-lacivert carousel xl:w-[54rem] lg:w-[42rem] md:w-[30rem] sm:w-[18rem] px-16 py-8 bg-opacity-60 rounded-3xl mt-20 mx-auto">
+<h1 class="text-2xl text-center mb-10 text-white">Yapay Zeka</h1>
+<div class="carousel__track" data-carousel-el="track">
+  <div class="carousel__slide">
+    <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+         <a href="{% url "dersler" %}">
+            <img src="{% static "img/prolog.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Prolog">
+            <span class= "font-bold">
+              Prolog
+            </span>
+          </a>
+          </div>
+        </li>
+        
+                  
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+          <a href="{% url "dersler" %}">
+            <img src="{% static "img/lisp.jpg" %}" alt="Lisp" class="w-24 h-24 object-cover rounded-full ">
+            <span class= "font-bold">
+              Lisp
+            </span>
+          </a>
+          </div>
+        </li>
+        
+        
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+           <a href="{% url "dersler" %}">
+            <img src="{% static "img/java.png" %}" class="w-24 h-24 object-cover rounded-full" alt="Java">
+            <span class= "font-bold">
+              Java
+            </span>
+          </a>
+          </div>
+        </li>
+        
+        <li class="slide-item glide__slide">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+           <a href="{% url "dersler" %}">
+            <img src="{% static "img/python.png" %}" class="w-24 h-24 object-cover rounded-full" alt="Python">
+            <span class= "font-bold">
+              Python
+            </span>
+          </a>
+          </div>
+        </li>
+  </ul>
+</div>
+<div class="carousel__slide">
+<ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<li class="slide-item glide__slide">
+<div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+ <a href="{% url "dersler" %}">
+  <img src="{% static "img/c.png" %}" class="w-24 h-24 object-cover rounded-full" alt="C++">
+  <span class= "font-bold">
+    C++
+  </span>
+</a>
+</div>
+</li> 
+
+
+</ul>
+  </div>
+</div>
+<div class="carousel__arrows flex justify-between mt-20" data-carousel-el="controls">
+  <button class="carousel__arrow carousel__arrow--left left-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-left text-2xl text-black"></i>
+</button>
+<button class="carousel__arrow carousel__arrow--right right-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-right text-2xl text-black"></i>
+</button>      
+</div>
+</div>
+
+<div class="bg-gradient-to-r from-lacivert  via-pembe to-lacivert carousel xl:w-[54rem] lg:w-[42rem] md:w-[30rem] sm:w-[18rem] px-16 mb-10 py-8 bg-opacity-60 rounded-3xl mt-20 mx-auto">
+<h1 class="text-2xl text-center mb-10 text-white">Veri Tabanı</h1>
+<div class="carousel__track" data-carousel-el="track">
+  <div class="carousel__slide">
+    <ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+         <a href="{% url "dersler" %}">
+            <img src="{% static "img/taban1.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Microsoft Acces">
+            <span class= "font-bold">
+              Microsoft Acces
+            </span>
+          </a>
+          </div>
+        </li>
+        
+                  
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+           <a href="{% url "dersler" %}">
+            <img src="{% static "img/taban2.jpg" %}" alt="MySql" class="w-24 h-24 object-cover rounded-full ">
+            <span class= "font-bold">
+              MySql
+            </span>
+          </a>
+          </div>
+        </li>
+        
+        
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+           <a href="{% url "dersler" %}">
+            <img src="{% static "img/taban3.jpg" %}"  alt="İnformix" class="w-24 h-24 object-cover rounded-full">
+            <span class= "font-bold">
+              İnformix
+            </span>
+          </a>
+          </div>
+        </li>
+        
+        <li class="slide-item glide__slide ">
+          <div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+           <a href="{% url "dersler" %}">
+            <img src="{% static "img/taban4.jpg" %}" alt="PostgreSql" class="w-24 h-24 object-cover rounded-full ">
+            <span class= "font-bold">
+              PostgreSql
+            </span>
+          </a>
+          </div>
+        </li>
+  </ul>
+</div>
+<div class="carousel__slide">
+<ul class="slide-group grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<li class="slide-item glide__slide ">
+<div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+ <a href="{% url "dersler" %}">
+  <img src="{% static "img/taban5.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Sysbase" >
+  <span class= "font-bold">
+    Sysbase
+  </span>
+</a>
+</div>
+</li> 
+
+<li class="slide-item glide__slide">
+<div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+ <a href="{% url "dersler" %}">
+  <img src="{% static "img/taban6.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="Oracle">
+  <span class= "font-bold">
+    Oracle
+  </span>
+</a>
+</div>
+</li> 
+
+
+
+<li class="slide-item glide__slide ">
+<div class="rounded p-4 shadow-lg transition-all duration-700 hover:scale-110">
+<a href="{% url "dersler" %}">
+  <img src="{% static "img/taban8.jpg" %}" class="w-24 h-24 object-cover rounded-full" alt="IBM DB2">
+  <span class= "font-bold">
+    IBM DB2
+  </span>
+</a>
+</div>
+</li>
+</ul>
+  </div>
+</div>
+<div class="carousel__arrows flex justify-between mt-20" data-carousel-el="controls">
+  <button class="carousel__arrow carousel__arrow--left left-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-left text-2xl text-black"></i>
+</button>
+<button class="carousel__arrow carousel__arrow--right right-4 duration-300 ease-in-out">
+    <i class="fas fa-angle-right text-2xl text-black"></i>
+</button>      
+</div>
+</div> {% endcomment %}
+
+{% endblock content %}
