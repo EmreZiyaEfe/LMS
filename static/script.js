@@ -285,13 +285,25 @@ searchIcon.addEventListener('click', function() {
 
 function toggleLanguageDropdown() {
   var dropdown = document.getElementById("language-dropdown-menu");
-  dropdown.classList.toggle("hidden");
+  if (dropdown.style.display === "block") {
+    dropdown.style.display = "none";
+} else {
+    dropdown.style.display = "block";
 }
+};
+  // dropdown.classList.toggle("hidden");
+
 
 function toggleMobileMenu() {
   var mobileMenu = document.getElementById("navbar-language");
-  mobileMenu.classList.toggle("hidden");
+
+  if (mobileMenu.style.display === "block") {
+    mobileMenu.style.display = "none";
+} else {
+    mobileMenu.style.display = "block";
 }
+};
+  // mobileMenu.classList.toggle("hidden");
 
 var languageDropdownToggle = document.querySelector("[data-dropdown-toggle=language-dropdown-menu]");
 languageDropdownToggle.addEventListener("click", toggleLanguageDropdown);
@@ -299,6 +311,17 @@ languageDropdownToggle.addEventListener("click", toggleLanguageDropdown);
 var mobileMenuToggle = document.querySelector("[data-collapse-toggle=navbar-language]");
 mobileMenuToggle.addEventListener("click", toggleMobileMenu);
 
+
+var fname = document.getElementById("fname");
+var userMenu = document.getElementById("userMenu");
+
+fname.addEventListener("click", function () {
+    if (userMenu.style.display === "none" || userMenu.style.display === "") {
+        userMenu.style.display = "block";
+    } else {
+        userMenu.style.display = "none";
+    }
+});
 
 
 // carousel 

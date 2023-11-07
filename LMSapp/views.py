@@ -3,6 +3,7 @@ from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils.text import slugify
 
 
 # Create your views here.
@@ -22,10 +23,47 @@ def egitimlerimiz(request):
     return render(request,'egitimlerimiz.html', {'anacategory': anacategory, 'altcategory' : altcategory})
 
 def sepet(request):
-    return render(request,'sepet.html')
+    kurslar = Sepet.objects.filter(ekleyen = request.user, odendiMi = False)
+    if request.method == 'POST':
+        sepetId = request.POST['sepetId']
+        sepet = Sepet.objects.get(id = sepetId)
+        if 'sil' in request.POST:
+            sepet.delete()
+            messages.success(request, 'Eğitim silindi.')
+            return redirect('sepet')
+    toplam=0
+    for i in kurslar:
+        toplam +=i.total
+    context = {
+        'kurslar':kurslar,
+        'toplam':toplam
+    }
+    return render(request,'sepet.html',context)
 
 def dersler(request):
     dersler = Egitimler.objects.all()
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            egitimId = request.POST['egitimId']
+            dersim = Egitimler.objects.get(id = egitimId)
+            if Sepet.objects.filter(ekleyen = request.user, egitim = dersim, odendiMi=False).exists():
+                sepet = Sepet.objects.get(ekleyen = request.user, egitim = dersim, odendiMi=False)
+                sepet.total = dersim.egitim_ucreti
+                sepet.save()
+                
+            else:
+                sepet = Sepet.objects.create(
+                    ekleyen = request.user,
+                    egitim = dersim,
+                    total = dersim.egitim_ucreti
+                )
+                sepet.save()
+            return redirect('indexPage')
+        else:
+            messages.warning(request, "Lütfen Giriş Yapınız")
+            return redirect('login')
+
+
     return render(request,'dersler.html',{'dersler':dersler})
 
 def egitmen(request, egitmen_id):
@@ -57,15 +95,20 @@ def kursOlustur(request):
             if request.method == 'POST':
                 courseForm = CreateCourseForm(request.POST, request.FILES)
                 if courseForm.is_valid():
+                    egitimler_title = courseForm.cleaned_data['egitimler_title']
+                    slug = slugify(egitimler_title),
+
+
                     new_course = Egitimler(
-                        egitimler_title = courseForm.cleaned_data['egitimler_title'],
+                        egitimler_title = egitimler_title,
                         egitim_icerigi = courseForm.cleaned_data['egitim_icerigi'],
                         egitim_alt_kategori =courseForm.cleaned_data['egitim_alt_kategori'],
                         egitim_seviyesi = courseForm.cleaned_data['egitim_seviyesi'],
                         egitim_suresi = courseForm.cleaned_data['egitim_suresi'],
                         egitim_ucreti = courseForm.cleaned_data['egitim_ucreti'],
                         egitim_image = courseForm.cleaned_data['egitim_image'],
-                        egitmen = request.user
+                        egitmen = request.user,
+                        slug = slug
                     )
 
                     new_course.save()

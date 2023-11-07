@@ -1,5 +1,203 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
+
+
+{% block content %}
+
+<div class="mt-4 w-full flex flex-col justify-evenly md:flex-row flex-container h-full">
+
+  <div class="w-full md:w-1/4 products mt-4 p-4 space-y-3 border-none sm:border-transparent sm:rounded bg-mor px-2 py-4 sm:px-6" id="products-div">
+
+    <p class="mt-6 text-center text-md text-white md:text-xl lg:text-start font-medium">Sepetim</p>
+
+    {% for sepet in kurslar %}
+    <div class="bg-mor flex flex-col border-none sm:border-transparent sm:rounded sm:flex-row" id="product-1">
+      
+        
+        
+      <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src="{{sepet.egitim.egitim_image.url}}" alt="product-1">
+      <div class="flex w-full flex-col px-4 py-4">
+        <span class="text-white font-semibold">{{sepet.egitim.egitimler_title}}</span>
+        <p class="text-white text-lg font-bold">{{sepet.egitim.egitim_ucreti|intcomma}} ₺</p>
+        <form action="" method="POST" class="text-end">
+          {% csrf_token %}
+          <input type="hidden" name="sepetId" value="{{sepet.id}}">
+          <button type="submit" name="sil" class="cursor-pointer fa-solid fa-trash-can fa-sm" style="color: #ffffff;"></button>
+        </form>
+        {% comment %} <i type="submit" class="cursor-pointer text-end fa-solid fa-trash-can fa-sm" style="color: #ffffff;" onclick=""></i> {% endcomment %}
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="cart-items space-y-8">
+
+      <p id="empty-cart-message" class="hidden mt-10 text-center text-white font-semibold">Sepetinizde ürün bulunmamaktadır.</p>
+      <button id="go-to-courses" class="hidden mb-8 w-full rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white" onclick="window.location.href='carousel.html'">
+       Eğitimlerimiz
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="w-full md:w-1/3 payments mt-4 p-4 space-y-3 border-none sm:border-transparent sm:rounded bg-mor px-2 py-4 sm:px-6" id="payments-div">
+
+    <p class="mt-6 text-center text-md text-white md:text-xl lg:text-start font-medium">Ödeme Bilgileri</p>
+
+<form action="" method="post">
+  {% csrf_token %}
+
+  <label for="{{ form.email.id_for_label }}" class="text-white text-sm font-semibold">E-Mail</label>
+  <input class="rounded w-full h-10" type="email" id="email" name="email" placeholder="   your.email@gmail.com" required>
+  {{ form.email }}
+
+  <label for="{{ form.ad.id_for_label }}" class="text-white text-sm font-semibold">Kart Sahibi</label>
+  <input class="rounded w-full h-10" type="text" id="ad" name="ad" placeholder="   İsim-Soyisim" required>
+  {{ form.ad }}
+
+  <div class="flex flex-col md:flex-row">
+    <div class="w-full md:w-1/2 mb-2 md:mb-0">
+        <label for="{{ form.kart_numarasi.id_for_label }}" class="text-white text-sm font-semibold">Kart Numarası</label>
+        <input class="rounded w-full h-10" type="text" id="kart-numarası" name="kart-numarası" placeholder="  xxxx-xxxx-xxxx-xxxx" required>
+        {{ form.kart_numarasi }}
+    </div>
+
+    <div class="w-1/2 md:w-1/4 mb-2 md:mb-0">
+        <label for="{{ form.month_year.id_for_label }}" class="text-white text-sm font-semibold">MM/YY</label>
+        <input class="rounded w-full h-10" type="text" id="month-year" name="month-year" placeholder="  MM/YY" required>
+        {{ form.month_year }}
+    </div>
+
+    <div class="w-1/2 md:w-1/4">
+        <label for="{{ form.cvc.id_for_label }}" class="text-white text-sm font-semibold">CVC</label>
+        <input class="rounded w-full h-10" type="text" id="cvc" name="cvc" placeholder="  CVC" required>
+        {{ form.cvc }}
+    </div>
+  </div>
+
+  <label for="fatura-adresi" class="text-white text-sm font-semibold">Fatura Adresi</label>
+  <textarea class="rounded w-full h-16" id="fatura-adresi" name="fatura-adresi" required></textarea>
+
+  <button id="confirm-button" class="w-full mt-4 mb-8 rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white">Sepeti Onayla</button>
+</form>
+
+<div class="mt-6 flex items-center justify-between">
+  <p class="text-white text-sm font-medium ">Toplam</p>
+  <p class="text-white text-2xl font-semibold ">{{toplam|intcomma}} ₺</p>  
+</div>
+
+
+  </div>
+
+</div>
+
+
+        {% endblock content %}   
+
+        {% block script %}
+        {% comment %} <script
+      src="https://kit.fontawesome.com/53467607bb.js"
+      crossorigin="anonymous">
+        </script> {% endcomment %}
+
+        <script>
+
+          {% comment %} function getCartItems() {
+              let cartItems = localStorage.getItem('cartItems');
+              if (cartItems) {
+                  cartItems = JSON.parse(cartItems);
+              } else {
+                  cartItems = [];
+              }
+              return cartItems;
+          }
+          
+          function deleteCartItem(id) {
+              const cartItems = getCartItems();
+              const updatedCartItems = cartItems.filter(item => item.id !== id);
+              localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+              displayCart();
+          }
+          
+          
+          function displayCart() {
+              const cartContainer = document.querySelector('.cart-items');
+              const cartItems = getCartItems();
+          
+              cartContainer.innerHTML = ''; // Sepeti temizle
+          
+              if (cartItems.length === 0) {
+                  const emptyCartMessage = document.createElement('p');
+                  emptyCartMessage.innerText = 'Sepetinizde ürün bulunmamaktadır.';
+                  emptyCartMessage.className = 'mt-10 text-center text-white font-semibold';
+                  cartContainer.appendChild(emptyCartMessage);
+          
+                  showCoursesButton(cartContainer);
+              } else {
+                  cartItems.forEach((item) => {
+                      const productDiv = document.createElement('div');
+          
+                      productDiv.style.color = 'white';
+          
+                      const productImage = document.createElement('img');
+                      productImage.src = item.image;
+                      productImage.alt = item.name;
+                      productImage.style.width = '100px'; // Genişlik
+                      productImage.style.height = '100px';
+                      productDiv.appendChild(productImage);
+          
+                      const trashCanIcon = document.createElement('i');
+                      trashCanIcon.className = 'fa-solid fa-trash-can fa-sm';
+                      trashCanIcon.style.color = '#f7f7f7';
+                      trashCanIcon.onclick = function () {
+                          if (confirm('Bu ürünü sepetten çıkarmak istediğinize emin misiniz?')) {
+                              deleteCartItem(item.id);
+                          }
+                      };
+          
+                      const productName = document.createElement('h2');
+                      productName.innerText = item.name;
+                      productDiv.appendChild(productName);
+          
+                      const productInstructor = document.createElement('p');
+                      productInstructor.innerText = item.instructor;
+                      productDiv.appendChild(productInstructor);
+          
+                      const productPrice = document.createElement('p');
+                      productPrice.innerText = item.price;
+                      productDiv.appendChild(productPrice);
+          
+                      productDiv.appendChild(trashCanIcon);
+          
+                      cartContainer.appendChild(productDiv);
+                  });
+              }
+          }
+          
+          function showCoursesButton(cartContainer) {
+              const coursesButton = document.createElement('button');
+              coursesButton.innerText = 'Eğitimlerimiz';
+              coursesButton.className = 'mb-8 w-full rounded border-transparent bg-mavi hover:bg-white hover-text-mavi px-6 py-3 font-medium text-white';
+              coursesButton.onclick = function () {
+                  window.location.href = 'carousel.html'; 
+              };
+              cartContainer.appendChild(coursesButton);
+          }
+          
+          const cartContainer = document.querySelector('.cart-items');
+          displayCart(); {% endcomment %}
+          
+          
+          </script>
+        {% endblock script %}
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
 
   
 {% block content %}
@@ -118,4 +316,4 @@
       src="https://kit.fontawesome.com/53467607bb.js"
       crossorigin="anonymous">
         </script>
-        {% endblock script %}
+        {% endblock script %} {% endcomment %}

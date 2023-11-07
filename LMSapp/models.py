@@ -1,24 +1,33 @@
 from django.db import models
 from LMSuser.models import *
+from django.utils.text import slugify
 # Create your models here.
 
 
 class AnaCategory(models.Model):
     ana_category_name = models.CharField(max_length=100)
-    slug = models.SlugField(default="", null=False, unique=True, db_index=True, max_length=50)
+    slug = models.SlugField(blank=True, null=True, unique=True, db_index=True, editable=False)
     
 
     def __str__(self):
         return self.ana_category_name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.ana_category_name)
+        super().save(*args, **kwargs)
 
 class AltCategory(models.Model):
     alt_category_name = models.CharField(max_length=100)
     alt_category_image = models.ImageField(upload_to='category_pic')
-    slug = models.SlugField(default="", null=False, unique=True, db_index=True, max_length=50)
+    slug = models.SlugField(blank=True, null=True, unique=True, db_index=True, editable=False)
 
 
     def __str__(self):
         return self.alt_category_name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.alt_category_name)
+        super().save(*args, **kwargs)
 
 
 class CourseLevel(models.Model):
@@ -38,10 +47,14 @@ class Egitimler(models.Model):
     egitim_seviyesi = models.ForeignKey(CourseLevel,on_delete=models.SET_NULL, null=True)
     egitim_ucreti = models.IntegerField(null=True)
     egitmen = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
-    slug = models.SlugField(default="", blank=True, null=False, unique=True, db_index=True)
+    slug = models.SlugField(blank=True, null=True, unique=True, db_index=True, editable=False)
 
     def __str__(self):
         return self.egitimler_title
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.egitimler_title)
+        super().save(*args, **kwargs)
 
 
 class Video_player(models.Model):
@@ -60,10 +73,11 @@ class Video_player(models.Model):
 
 
 class Sepet(models.Model):
-    sepet_title = models.CharField(max_length=50)
-    egitim_fiyat = models.IntegerField()
-    egitim_id = models.CharField(max_length=30)
+    ekleyen = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    egitim = models.ForeignKey(Egitimler, on_delete=models.CASCADE)
+    total = models.IntegerField()
+    odendiMi = models.BooleanField(default=False, verbose_name='Ödendi mi?')
     
 
     def __str__(self):
-        return self.sepet_title
+        return self.ekleyen.first_name
