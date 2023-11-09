@@ -17,7 +17,7 @@
 {% endif %}
 
 <section class="bg-lacivert">
-    <div class="px-4 py-10 mx-auto max-w-7xl">
+    <div class="px-4  mx-auto max-w-7xl">
       <a href="{% url "indexPage" %}" title="Kutty Home Page" class="flex items-center justify-start sm:justify-center">
         <img src="{% static "img/neos.png" %}" alt="" class="h-48 mr-5">
       </a>
@@ -28,15 +28,26 @@
         method="POST">
 
         {% csrf_token %}
-
-        {{ form.as_p }}
-
-            <button class="mr-4 cursor-pointer transition-all bg-mavi text-white px-6 py-2 rounded-lg
-            border-pembe
-            border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
-            active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">Kayıt Ol</button>
+        <!-- {{ form.as_p }} -->
+        {% for field in form %}
+        <div class="mb-4">
+            {{ field.errors }}
+            {% if field.name == 'is_teacher' %}
+                {{ form.is_teacher.label_tag }}
+            {% endif %}
+            {{ field }}
+            {% if field.help_text %}
+                <small class="text-gray-500">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button class="mr-4 cursor-pointer transition-all bg-mavi text-white px-6 py-2 rounded-lg
+        border-pembe
+        border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+        active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">Kayıt Ol</button>
             
           </div>
+          
         </form>
       </div>
       <p class="my-0 text-sm font-medium text-center text-gray-500 sm:my-5">

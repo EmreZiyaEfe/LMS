@@ -45,8 +45,7 @@
 
     <p class="mt-6 text-center text-md text-white md:text-xl lg:text-start font-medium">Ödeme Bilgileri</p>
 
-<form action="" method="post">
-  {% csrf_token %}
+
 
   <label for="{{ form.email.id_for_label }}" class="text-white text-sm font-semibold">E-Mail</label>
   <input class="rounded w-full h-10" type="email" id="email" name="email" placeholder="   your.email@gmail.com" required>
@@ -78,8 +77,10 @@
 
   <label for="fatura-adresi" class="text-white text-sm font-semibold">Fatura Adresi</label>
   <textarea class="rounded w-full h-16" id="fatura-adresi" name="fatura-adresi" required></textarea>
-
-  <button id="confirm-button" class="w-full mt-4 mb-8 rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white">Sepeti Onayla</button>
+  
+<form action="" method="POST">
+    {% csrf_token %}
+    <button type="submit" name='odeme' id="confirm-button" class="w-full mt-4 mb-8 rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white">Sepeti Onayla</button>
 </form>
 
 <div class="mt-6 flex items-center justify-between">

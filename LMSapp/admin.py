@@ -37,3 +37,8 @@ class AltCategoryAdmin(admin.ModelAdmin):
 @admin.register(CourseLevel)
 class CourseLevelAdmin(admin.ModelAdmin):
     list_display = ['egitim_seviyesi',]    
+    
+
+@admin.register(Odeme)
+class OdemeAdmin(admin.ModelAdmin):
+    pass    

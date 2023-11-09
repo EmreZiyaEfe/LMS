@@ -85,7 +85,14 @@
               <a href="{% url "kursOlustur" %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Kurs Oluştur</a>
             </li>
             <li>
-              <a href="{% url "videoUpload" %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Video Yükle</a>
+              <a href="{% url "videoUpload" user.id %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Video Yükle</a>
+            </li>
+            <li>
+              <a href="{% url "ogrenciLogin" user.id %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Derslerim</a>
+            </li>
+            {% elif user.is_authenticated %} 
+            <li>
+              <a href="{% url "ogrenciLogin" user.id %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Derslerim</a>
             </li>
             {% else %}
 
