@@ -16,7 +16,9 @@
           <div class="icons-container flex items-center space-x-2">
           {% if user.is_authenticated %}
           <div class="flex items-center">
-           <div id="fname" class="text-white"> {{ user.get_full_name|title }} </div>
+           <div id="fname" class="text-white" style="width: 30px; height: 30px;"> <img src="{{user.image.url}}" alt=""> </div>
+           {% comment %} <div id="fname" class="text-white"> {{ user.get_full_name|title }} </div> {% endcomment %}
+
            
            <ul class="w-52 h-52 p-6 absolute hidden bg-white border space-y-2 top-16 right-4 border-mor rounded text-mavi z-50" id="userMenu">
             <li><a href="{% url "changermotdepasse" %}">Şifremi Değiştir</a></li>
@@ -38,8 +40,11 @@
               <div class="flex items-center">
                 <i id="search-icon" class="fas fa-search text-white hover:text-mor cursor-pointer"></i>
                 <div id="search-bar" class="hidden ml-2">
-                    <input type="text" placeholder="Arama yap..." class="border rounded p-1">
+                  <form action="{% url "search" %}" method="GET">
+                    {% csrf_token %}
+                    <input type="search" placeholder="Arama yap..." name="search" value"{{search}}" class="border rounded p-1">
                     <button type="submit" class="bg-lacivert text-white rounded p-1 hover:bg-pembe cursor-pointer">Ara</button>
+                  </form>
                 </div>
             </div>
                 <a href="{% url "sepet" %}" class="fas fa-shopping-cart text-white hover:text-mor cursor-pointer"></a>
@@ -88,11 +93,11 @@
               <a href="{% url "videoUpload" user.id %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Video Yükle</a>
             </li>
             <li>
-              <a href="{% url "ogrenciLogin" user.id %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Derslerim</a>
+              <a href="{% url "ogrenciLogin" %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Derslerim</a>
             </li>
             {% elif user.is_authenticated %} 
             <li>
-              <a href="{% url "ogrenciLogin" user.id %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Derslerim</a>
+              <a href="{% url "ogrenciLogin" %}" class="block py-2 pl-3 pr-4 text-white hover:text-pembe rounded md:bg-transparent md:p-0" aria-current="page">Derslerim</a>
             </li>
             {% else %}
 

@@ -43,13 +43,13 @@ class CustomUserForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block p-2.5 w-60 checked:bg-emerald-500' , 'placeholder': 'Ad'}),
 
-            'last_name': forms.TextInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block p-2.5 w-60 checked:bg-emerald-500','placeholder': 'soyad'}),
+            'last_name': forms.TextInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block p-2.5 w-60 checked:bg-emerald-500','placeholder': 'Soyad'}),
 
             'email': forms.EmailInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block p-2.5 w-60 checked:bg-emerald-500','placeholder': 'Mail Adresiniz...'}),
 
             'password': forms.PasswordInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block w-60 p-2.5 checked:bg-emerald-500','placeholder': '******'}),
 
-            'tc': forms.TextInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block w-60 p-2.5 checked:bg-emerald-500','placeholder':'Tc Girin'}),
+            'tc': forms.TextInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block w-60 p-2.5 checked:bg-emerald-500','placeholder':'Tc No Giriniz'}),
 
             'phone_number': forms.TextInput(attrs={'class': 'm-auto relative bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-mor text-sm rounded-lg focus:ring-mor focus:border-mor block w-60 p-2.5 checked:bg-emerald-500','placeholder':'Telefon Numaranız'}),
         }

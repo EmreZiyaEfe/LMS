@@ -7,6 +7,10 @@ from .models import *
 
 class CustomUserAdmin(UserAdmin):
       fieldsets = UserAdmin.fieldsets + (('Photo', {"fields": ["image"]}),
-                                         ('Personal Info', {"fields": ['phone_number','tc','is_teacher',]}),)
+                                         ('Personal Info', {"fields": ['phone_number','tc','is_teacher','description','rozet','slug']}),)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+
+admin.site.register(Rozetler)

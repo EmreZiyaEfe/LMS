@@ -7,10 +7,42 @@
 
 <div class="mt-4 w-full flex flex-col justify-evenly md:flex-row flex-container h-full">
 
-  <div class="w-full md:w-1/4 products mt-4 p-4 space-y-3 border-none sm:border-transparent sm:rounded bg-mor px-2 py-4 sm:px-6" id="products-div">
+  {% comment %} <div class="w-full md:w-1/4 products mt-4 p-4 space-y-3 border-none sm:border-transparent sm:rounded bg-mor px-2 py-4 sm:px-6" id="products-div">
 
     <p class="mt-6 text-center text-md text-white md:text-xl lg:text-start font-medium">Sepetim</p>
 
+    {% for sepet in kurslar %}
+    <div class="bg-mor flex flex-col border-none sm:border-transparent sm:rounded sm:flex-row" id="product-1">
+      
+        
+        
+      <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src="{{sepet.egitim.egitim_image.url}}" alt="product-1">
+      <div class="flex w-full flex-col px-4 py-4">
+        <span class="text-white font-semibold">{{sepet.egitim.egitimler_title}}</span>
+        <p class="text-white text-lg font-bold">{{sepet.egitim.egitim_ucreti|intcomma}} ₺</p>
+        <form action="" method="POST" class="text-end">
+          {% csrf_token %}
+          <input type="hidden" name="sepetId" value="{{sepet.id}}">
+          <button type="submit" name="sil" class="cursor-pointer fa-solid fa-trash-can fa-sm" style="color: #ffffff;"></button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="cart-items space-y-8">
+
+      <p id="empty-cart-message" class="hidden mt-10 text-center text-white font-semibold">Sepetinizde ürün bulunmamaktadır.</p>
+      <button id="go-to-courses" class="hidden mb-8 w-full rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white" onclick="window.location.href='carousel.html'">
+       Eğitimlerimiz
+      </button>
+
+    </div>
+
+  </div> {% endcomment %}
+
+  <div class="w-full md:w-1/3 payments mt-4 p-4 space-y-3 border-none sm:border-transparent sm:rounded bg-mor px-2 py-4 sm:px-6 mb-20" id="payments-div">
+
+    <p class="mt-6 text-center text-md text-white md:text-xl lg:text-start font-medium">Ödeme Bilgileri</p>
     {% for sepet in kurslar %}
     <div class="bg-mor flex flex-col border-none sm:border-transparent sm:rounded sm:flex-row" id="product-1">
       
@@ -30,24 +62,9 @@
     </div>
     {% endfor %}
 
-    <div class="cart-items space-y-8">
-
-      <p id="empty-cart-message" class="hidden mt-10 text-center text-white font-semibold">Sepetinizde ürün bulunmamaktadır.</p>
-      <button id="go-to-courses" class="hidden mb-8 w-full rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white" onclick="window.location.href='carousel.html'">
-       Eğitimlerimiz
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="w-full md:w-1/3 payments mt-4 p-4 space-y-3 border-none sm:border-transparent sm:rounded bg-mor px-2 py-4 sm:px-6" id="payments-div">
-
-    <p class="mt-6 text-center text-md text-white md:text-xl lg:text-start font-medium">Ödeme Bilgileri</p>
 
 
-
-  <label for="{{ form.email.id_for_label }}" class="text-white text-sm font-semibold">E-Mail</label>
+  {% comment %} <label for="{{ form.email.id_for_label }}" class="text-white text-sm font-semibold">E-Mail</label>
   <input class="rounded w-full h-10" type="email" id="email" name="email" placeholder="   your.email@gmail.com" required>
   {{ form.email }}
 
@@ -73,11 +90,11 @@
         <input class="rounded w-full h-10" type="text" id="cvc" name="cvc" placeholder="  CVC" required>
         {{ form.cvc }}
     </div>
-  </div>
+  </div> 
 
   <label for="fatura-adresi" class="text-white text-sm font-semibold">Fatura Adresi</label>
   <textarea class="rounded w-full h-16" id="fatura-adresi" name="fatura-adresi" required></textarea>
-  
+  {% endcomment %}
 <form action="" method="POST">
     {% csrf_token %}
     <button type="submit" name='odeme' id="confirm-button" class="w-full mt-4 mb-8 rounded border-transparent bg-mavi hover:bg-white hover:text-mavi px-6 py-3 font-medium text-white">Sepeti Onayla</button>
@@ -93,8 +110,7 @@
 
 </div>
 
-
-        {% endblock content %}   
+{% endblock content %}   
 
         {% block script %}
         {% comment %} <script

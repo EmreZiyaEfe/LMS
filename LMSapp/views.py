@@ -14,6 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import pprint
 from django.core.cache import cache
+from LMSuser.models import CustomUser
+from django.db.models import Q
 
 #denemelms@gmail.com 102030
 
@@ -188,7 +190,11 @@ def index(request):
     return render(request,'index.html')
 
 def hakkimizda(request):
-    return render(request,'hakkimizda.html')
+    egitmenler = CustomUser.objects.filter(is_teacher = True)
+    context = dict(
+        egitmenler = egitmenler
+    )
+    return render(request,'hakkimizda.html',context)
 
 def iletisim(request):
     return render(request,'iletisim.html')
@@ -217,35 +223,54 @@ def egitimlerimiz(request):
 #     altcategory = AltCategory.objects.all() 
 #     return render(request,'egitimlerimiz.html', {'altcategory' : altcategory})
 
-def sepet(request):
-    kurslar = Sepet.objects.filter(ekleyen = request.user, odendiMi = False)
-    toplam=0
-    for i in kurslar:
-        toplam +=i.total
-    if request.method == 'POST':
-        if 'odeme' not in request.POST:
-            sepetId = request.POST['sepetId']
-            sepet = Sepet.objects.get(id = sepetId)
-        if 'sil' in request.POST:
-            sepet.delete()
-            messages.success(request, 'Eğitim silindi.')
-            return redirect('sepet')
-        elif 'odeme' in request.POST:
-            if not Odeme.objects.filter(user = request.user, odendiMi = False).exists():
-                odeme = Odeme.objects.create(
-                    user = request.user,
-                    total = toplam
-                )
-                odeme.egitimler.add(*kurslar)
-                odeme.save()
-            return redirect('payment')
 
+def search(request):
+    if request.GET.get('search'):
+        search = request.GET.get('search')
+        dersler = Egitimler.objects.filter(Q(egitimler_title__icontains = search)|
+                                           Q(egitmen__first_name__icontains = search) |
+                                           Q(egitmen__last_name__icontains = search))
+        for i in dersler:
+            print(i.egitimler_title)
+        
+        context = {
+            'dersler':dersler ,
+            'search':search
+        }
+    return render(request, 'search.html',context)
+
+def sepet(request):
+    if request.user.is_authenticated:
+        kurslar = Sepet.objects.filter(ekleyen = request.user, odendiMi = False)
+        toplam=0
+        for i in kurslar:
+            toplam +=i.total
+        if request.method == 'POST':
+            if 'odeme' not in request.POST:
+                sepetId = request.POST['sepetId']
+                sepet = Sepet.objects.get(id = sepetId)
+            if 'sil' in request.POST:
+                sepet.delete()
+                messages.success(request, 'Eğitim silindi.')
+                return redirect('sepet')
+            elif 'odeme' in request.POST:
+                if not Odeme.objects.filter(user = request.user, odendiMi = False).exists():
+                    odeme = Odeme.objects.create(
+                        user = request.user,
+                        total = toplam
+                    )
+                    odeme.egitimler.add(*kurslar)
+                    odeme.save()
+                return redirect('payment')
+
+        
+        context = {
+            'kurslar':kurslar,
+            'toplam':toplam
+        }
+        return render(request,'sepet.html',context)
+    return render(request,'sepet.html')
     
-    context = {
-        'kurslar':kurslar,
-        'toplam':toplam
-    }
-    return render(request,'sepet.html',context)
 
 def dersler(request, category_slug):
     dersler = Egitimler.objects.filter(egitim_alt_kategori__slug = category_slug)
@@ -265,7 +290,7 @@ def dersler(request, category_slug):
                     total = dersim.egitim_ucreti
                 )
                 sepet.save()
-            return redirect('indexPage')
+            return redirect('sepet')
         else:
             messages.warning(request, "Lütfen Giriş Yapınız")
             return redirect('login')
@@ -273,12 +298,44 @@ def dersler(request, category_slug):
 
     return render(request,'dersler.html',{'dersler':dersler})
 
-def egitmen(request, egitmen_id):
+
+
+
+def egitmen(request, egitmen_id, slug):
+    print(egitmen_id)
     dersler = Egitimler.objects.filter(egitmen_id = egitmen_id)
+    egitmen = CustomUser.objects.get(pk = egitmen_id)
+    ders_sayisi = dersler.count()
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            egitimId = request.POST['egitimId']
+            dersim = Egitimler.objects.get(id = egitimId)
+            if Sepet.objects.filter(ekleyen = request.user, egitim = dersim, odendiMi=False).exists():
+                sepet = Sepet.objects.get(ekleyen = request.user, egitim = dersim, odendiMi=False)
+                sepet.total = dersim.egitim_ucreti
+                sepet.save()
+                
+            else:
+                sepet = Sepet.objects.create(
+                    ekleyen = request.user,
+                    egitim = dersim,
+                    total = dersim.egitim_ucreti
+                )
+                sepet.save()
+            return redirect('sepet')
+        else:
+            messages.warning(request, "Lütfen Giriş Yapınız")
+            return redirect('login')
     context = {
-        'dersler' : dersler
+        'dersler' : dersler,
+        'egitmen' : egitmen,
+        'ders_sayisi':ders_sayisi
     }
     return render(request,'egitmen.html', context)
+
+
+
+
 
 def instructor(request):
     return render(request,'instructor.html')
@@ -286,7 +343,7 @@ def instructor(request):
 def mesajlar(request):
     return render(request,'mesajlar.html')
 
-def ogrenciLogin(request, id):
+def ogrenciLogin(request):
     odemeler = Odeme.objects.filter(user=request.user, odendiMi = True)
     context = {
         'odemeler':odemeler

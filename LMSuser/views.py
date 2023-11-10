@@ -151,6 +151,7 @@ def edit_profile(request):
                 user.first_name = editForm.cleaned_data['first_name']
                 user.last_name = editForm.cleaned_data['last_name']
                 user.email = editForm.cleaned_data['email']
+                user.description = editForm.cleaned_data['bio']
                 user.save()
 
                 return redirect('indexPage')  
@@ -171,7 +172,8 @@ def edit_profile(request):
             'last_name': user.last_name,
             'tc':user.tc,
             'email': user.email,
-            'phone_number':user.phone_number
+            'phone_number':user.phone_number,
+            'bio' : user.description
         }
         editForm = EditProfileForm(initial=initial_data)
         image_form = EditImageForm()
