@@ -27,3 +27,6 @@ urlpatterns = [
     path('', include('LMSapp.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'LMSapp.views.view_404'
+handler500 = 'LMSapp.views.view_500'

@@ -464,6 +464,14 @@ def videoUpload(request,egitmen_id):
         }
 
         return render(request,'videoUpload.html', context)
+    
+
+def view_404(request, exception):
+    return redirect('/')
+
+
+def view_500(request):
+    return render(request, 'hata.html')
 
 # @login_required(login_url='login')
 # def videoUpload(request, egitmen_id):
